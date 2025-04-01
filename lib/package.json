@@ -16,5 +16,5 @@
   },
   "author": "sanyalovemoney",
   "license": "MIT",
-  "description": "A collection of advanced JavaScript utility modules: generators, memoization, priority queue, async utilities, streams, event emitters, auth proxy, and logging decorators."
+  "description": "A collection of advanced JavaScript utility modules: generators, memoization, priority queue, async utilities, streams, event emitters, auth proxy, logging decorators, and a high-performance Big Data streaming ETL pipeline."
 }
