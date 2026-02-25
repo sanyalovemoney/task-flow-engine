@@ -1,0 +1,11 @@
+{
+  "name": "task-flow-engine",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^10.0.2",
+    "prettier": "3.8.1"
+  }
+}
