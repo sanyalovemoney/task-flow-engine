@@ -10,9 +10,11 @@ export function memoizeById(fn) {
         }
 
         if (cache.has(id)) {
+            console.log(`Cache hit for id: ${id}`);
             return cache.get(id);
         }
 
+        console.log(`Cache miss for id: ${id}`);
         const result = fn.apply(this, args);
         cache.set(id, result);
         return result;
