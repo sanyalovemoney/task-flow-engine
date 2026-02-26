@@ -5,9 +5,10 @@ export function memoizeById(fn) {
         const id = (args[0] && typeof args[0] === 'object' && args[0].id) || JSON.stringify(args);
 
         if (id === undefined) {
-            throw new Error("Аргумент повинен бути об'єктом з властивістю 'id' або серіалізованим значенням");
+            console.warn("Warning: No valid ID.");
+            return fn.apply(this, args);
         }
-        
+
         if (cache.has(id)) {
             return cache.get(id);
         }
