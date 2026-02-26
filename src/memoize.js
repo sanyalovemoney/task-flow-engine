@@ -1,14 +1,15 @@
-export function memoizeById (fn) {
+export function memoizeById(fn) {
     const cache = new Map();
-      return function(...args) {
-        const key = JSON.stringify(args);
 
-        if (cache.has(key)) {
-            return cache.get(key);
+    return function(...args) {
+        const id = (args[0] && typeof args[0] === 'object' && args[0].id) || JSON.stringify(args);
+
+        if (cache.has(id)) {
+            return cache.get(id);
         }
 
         const result = fn.apply(this, args);
-        cache.set(key, result);
+        cache.set(id, result);
         return result;
     }
 }
