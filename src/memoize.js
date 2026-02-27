@@ -1,7 +1,7 @@
 export function memoizeById(fn) {
     const cache = new Map();
 
-    return function(...args) {
+    const memoizedFn = function(...args) {
         const id = (args[0] && typeof args[0] === 'object' && args[0].id) || JSON.stringify(args);
 
         if (id === undefined) {
@@ -18,5 +18,7 @@ export function memoizeById(fn) {
         const result = fn.apply(this, args);
         cache.set(id, result);
         return result;
-    }
+    };
+    Object.defineProperty(memoizedFn, 'name', { value: fn.name || 'unknown' });
+    return memoizedFn;
 }
