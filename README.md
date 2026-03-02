@@ -10,7 +10,8 @@
 - **Мова:** JavaScript 
 - **Інструменти:** Git, NPM
 
-## 🏗 Структура проекту 
+##  Структура проекту 
+```text
 task-flow/
 ├── src/
 │   ├── generator.js     # Task 1
@@ -19,7 +20,7 @@ task-flow/
 │   ├── async-utils.js   # Task 5
 │   └── decorators.js    # Task 9
 ├── index.js            
-└── package.json         
+└── package.json        
 
 Автор: Машута Олександр 
 Група: ІМ-о51
