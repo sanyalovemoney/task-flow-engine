@@ -12,4 +12,19 @@ enqueue(item, priority) {
     });
     console.log(`[Queue] Додано: ${item}, пріоритет: ${priority}`);
   }
+
+  _getIndex(type) {
+    if (this.items.length === 0) return -1;
+
+    return this.items.reduce((bestIdx, curr, currIdx, arr) => {
+      const best = arr[bestIdx];
+      switch (type) {
+        case 'highest': return curr.priority < best.priority ? currIdx : bestIdx;
+        case 'lowest':  return curr.priority > best.priority ? currIdx : bestIdx;
+        case 'oldest':  return curr.order < best.order ? currIdx : bestIdx;
+        case 'newest':  return curr.order > best.order ? currIdx : bestIdx;
+        default: return bestIdx;
+      }
+    }, 0);
+  }
 }
