@@ -1,6 +1,8 @@
 import { taskGenerator } from './src/generator.js';
 import { memoizeById } from './src/memoize.js';
 import { logExecution } from './src/decorators.js';
+import { BiDirectionalPriorityQueue } from './src/queue.js';
+import { asyncMapPromise } from './src/async-utils.js';
 
 const gen = taskGenerator();
 
