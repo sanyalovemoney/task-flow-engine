@@ -27,10 +27,16 @@ enqueue(item, priority) {
       }
     }, 0);
   }
-  
+
 dequeue(type) { 
     const index = this._getIndex(type);
     if (index === -1) return null;
     return this.items.splice(index, 1)[0].item;
+  }
+  
+peek(type) {
+    const index = this._getIndex(type);
+    if (index === -1) return null;
+    return this.items[index].item;
   }
 }
