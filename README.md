@@ -10,5 +10,16 @@
 - **Мова:** JavaScript 
 - **Інструменти:** Git, NPM
 
+## 🏗 Структура проекту 
+task-flow/
+├── src/
+│   ├── generator.js     # Task 1
+│   ├── memoize.js       # Task 3
+│   ├── queue.js         # Task 4
+│   ├── async-utils.js   # Task 5
+│   └── decorators.js    # Task 9
+├── index.js            
+└── package.json         
+
 Автор: Машута Олександр 
 Група: ІМ-о51
