@@ -27,3 +27,11 @@ console.log("Повторна обробка задачі 1:");
 wrappedSmartProcessTask(task1);
 console.log("Обробка задачі 2:");
 wrappedSmartProcessTask(task2);
+
+const bpq = new BiDirectionalPriorityQueue();
+bpq.enqueue("Task A", 10); 
+bpq.enqueue("Task B", 1);  
+bpq.enqueue("Task C", 5);  
+
+console.log("Highest:", bpq.dequeue('highest')); 
+console.log("Oldest:", bpq.dequeue('oldest'));  
