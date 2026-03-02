@@ -35,3 +35,22 @@ bpq.enqueue("Task C", 5);
 
 console.log("Highest:", bpq.dequeue('highest')); 
 console.log("Oldest:", bpq.dequeue('oldest'));  
+
+const controller = new AbortController();
+const data = [1, 2, 3, 4, 5];
+
+const slowSquare = async (n) => {
+  await new Promise(res => setTimeout(res, 1000));
+  return n * n;
+};
+
+console.log("Починаємо асинхронний map");
+
+try {
+  setTimeout(() => controller.abort(), 1500);
+
+  const results = await asyncMapPromise(data, slowSquare, controller.signal);
+  console.log("Результати:", results);
+} catch (err) {
+  console.log("Помилка:", err.message); 
+}
