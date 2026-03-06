@@ -19,8 +19,8 @@ enqueue(item, priority) {
     return this.items.reduce((bestIdx, curr, currIdx, arr) => {
       const best = arr[bestIdx];
       switch (type) {
-        case 'highest': return curr.priority < best.priority ? currIdx : bestIdx;
-        case 'lowest':  return curr.priority > best.priority ? currIdx : bestIdx;
+        case 'highest': return curr.priority > best.priority ? currIdx : bestIdx;
+        case 'lowest':  return curr.priority < best.priority ? currIdx : bestIdx;
         case 'oldest':  return curr.order < best.order ? currIdx : bestIdx;
         case 'newest':  return curr.order > best.order ? currIdx : bestIdx;
         default: return bestIdx;
