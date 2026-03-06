@@ -9,3 +9,14 @@ export function memoizeById(fn) {
         return res;
     };
 }
+
+export function memoizeAdvanced(fn, { maxSize = Infinity, strategy = 'LRU', ttl = null } = {}) {
+    const cache = new Map(), meta = new Map();
+    
+    const evict = () => {
+        let key;
+        if (strategy === 'LRU') key = cache.keys().next().value; 
+        if (strategy === 'LFU') key = [...meta].reduce((a, b) => a[1].f < b[1].f ? a : b)[0];
+        if (key) { cache.delete(key); meta.delete(key); }
+    };
+};
