@@ -1,6 +1,7 @@
 import { taskGenerator, iteratorWithTimeout } from './src/generator.js';
 import { memoizeAdvanced } from './src/memoize.js';
 import { BiDirectionalPriorityQueue } from './src/queue.js';
+import { asyncMapCallback, } from './src/async-utils.js';
 
 console.log('TASK-FLOW ENGINE - ALL TASKS DEMO ');
 console.log('TASK 1: Generators & Timeout Iterator');
@@ -22,5 +23,11 @@ queue.enqueue('Task C', 5);
 console.log(`  Highest: ${queue.dequeue('highest')}`);
 console.log(`  Lowest: ${queue.dequeue('lowest')}`);
 console.log(`  Peek Oldest: ${queue.peek('oldest')}`);
+
+console.log('\nTASK 5: Async Map (Callback & Promise & AbortController)');
+const data = [1, 2, 3];
+asyncMapCallback(data, (item, cb) => {
+  setTimeout(() => cb(item * 2), 10);
+}, (results) => console.log(`  Callback results: [${results.join(',')}]`));
 
 console.log('ALL TASKS COMPLETED SUCCESSFULLY');
