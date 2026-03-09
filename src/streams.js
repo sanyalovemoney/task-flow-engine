@@ -1,4 +1,4 @@
-import { Readable, } from 'stream';
+import { Readable, Writable } from 'stream';
 
 export class TaskReadableStream extends Readable { 
   constructor(generator, limit = 10) {
@@ -16,5 +16,16 @@ export class TaskReadableStream extends Readable {
     const { value } = this.generator.next();
     this.push(value);
     this.count++;
+  }
+}
+
+export class TaskWritableStream extends Writable {
+  constructor() {
+    super({ objectMode: true });
+  }
+
+  _write(task, _encoding, callback) {
+    console.log(`[Stream] Записано: Задача №${task.id}`);
+    callback();
   }
 }
