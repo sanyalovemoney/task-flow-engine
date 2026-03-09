@@ -1,7 +1,7 @@
 import { taskGenerator, iteratorWithTimeout } from './src/generator.js';
 import { memoizeAdvanced } from './src/memoize.js';
 import { BiDirectionalPriorityQueue } from './src/queue.js';
-import { asyncMapCallback, } from './src/async-utils.js';
+import { asyncMapCallback, asyncMapPromise } from './src/async-utils.js';
 
 console.log('TASK-FLOW ENGINE - ALL TASKS DEMO ');
 console.log('TASK 1: Generators & Timeout Iterator');
@@ -29,5 +29,18 @@ const data = [1, 2, 3];
 asyncMapCallback(data, (item, cb) => {
   setTimeout(() => cb(item * 2), 10);
 }, (results) => console.log(`  Callback results: [${results.join(',')}]`));
+
+const results = await asyncMapPromise(data, async (n) => n * 2);
+console.log(`  Promise results: [${results.join(',')}]`);
+
+const controller = new AbortController();
+try {
+  await asyncMapPromise([1,2,3,4,5], async (n) => {
+    await new Promise(r => setTimeout(r, 500));
+    return n;
+  }, controller.signal);
+} catch (error) {
+  console.log(`AbortController works`);
+}
 
 console.log('ALL TASKS COMPLETED SUCCESSFULLY');
