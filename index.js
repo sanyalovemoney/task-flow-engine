@@ -2,6 +2,7 @@ import { taskGenerator, iteratorWithTimeout } from './src/generator.js';
 import { memoizeAdvanced } from './src/memoize.js';
 import { BiDirectionalPriorityQueue } from './src/queue.js';
 import { asyncMapCallback, asyncMapPromise } from './src/async-utils.js';
+import { TaskReadableStream, TaskWritableStream } from './src/streams.js';
 
 console.log('TASK-FLOW ENGINE - ALL TASKS DEMO ');
 console.log('TASK 1: Generators & Timeout Iterator');
@@ -42,5 +43,12 @@ try {
 } catch (error) {
   console.log(`AbortController works`);
 }
+
+console.log('\nTASK 6: Stream Processing');
+const readable = new TaskReadableStream(taskGenerator(), 2);
+const writable = new TaskWritableStream();
+readable.pipe(writable);
+await new Promise(r => writable.on('finish', r));
+console.log(`  Stream processing done `);
 
 console.log('ALL TASKS COMPLETED SUCCESSFULLY');
