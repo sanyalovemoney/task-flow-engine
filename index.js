@@ -3,6 +3,7 @@ import { memoizeAdvanced } from './src/memoize.js';
 import { BiDirectionalPriorityQueue } from './src/queue.js';
 import { asyncMapCallback, asyncMapPromise } from './src/async-utils.js';
 import { TaskReadableStream, TaskWritableStream } from './src/streams.js';
+import { createEventEmitter } from './src/events.js';
 
 console.log('TASK-FLOW ENGINE - ALL TASKS DEMO ');
 console.log('TASK 1: Generators & Timeout Iterator');
@@ -50,5 +51,17 @@ const writable = new TaskWritableStream();
 readable.pipe(writable);
 await new Promise(r => writable.on('finish', r));
 console.log(`  Stream processing done `);
+
+console.log('\nTASK 7: Event Emitters');
+const q = new BiDirectionalPriorityQueue();
+const emitter = createEventEmitter(q);
+let addCount = 0;
+emitter.on('added', () => addCount++);
+emitter.on('empty', () => console.log(`  Queue empty!`));
+q.enqueue('X', 1);
+q.enqueue('Y', 2);
+q.dequeue('highest');
+q.dequeue('highest');
+console.log(`Events fired: ${addCount}, Multiple listeners work ✓`);
 
 console.log('ALL TASKS COMPLETED SUCCESSFULLY');
