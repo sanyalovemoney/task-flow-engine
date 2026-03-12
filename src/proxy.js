@@ -50,3 +50,11 @@ export class APIAuthProxy {
     return { strategy: this.strategy, total: this.requestLog.length, count: this.requestCount, recent: this.requestLog.slice(-5) };
   }
 }
+
+export const createAuthInterceptor = (strategy, credentials) => {
+  const proxy = new APIAuthProxy('', strategy, credentials);
+  return {
+    request: async (conf) => ({ ...conf, headers: proxy.injectAuthHeaders(conf.headers) }),
+    error: (err) => (console.error(err.message), Promise.reject(err))
+  };
+};
