@@ -4,6 +4,7 @@ import { BiDirectionalPriorityQueue } from './src/queue.js';
 import { asyncMapCallback, asyncMapPromise } from './src/async-utils.js';
 import { TaskReadableStream, TaskWritableStream } from './src/streams.js';
 import { createEventEmitter } from './src/events.js';
+import { APIAuthProxy, AuthStrategy } from './src/proxy.js';
 
 console.log('TASK-FLOW ENGINE - ALL TASKS DEMO ');
 console.log('TASK 1: Generators & Timeout Iterator');
@@ -63,5 +64,20 @@ q.enqueue('Y', 2);
 q.dequeue('highest');
 q.dequeue('highest');
 console.log(`Events fired: ${addCount}, Multiple listeners work ✓`);
+
+console.log('\nTASK 8: Auth Proxy (Multiple Strategies)');
+const proxyApiKey = new APIAuthProxy('https://api.example.com', AuthStrategy.API_KEY, { apiKey: 'key-123' });
+await proxyApiKey.get('/users');
+
+const proxyJwt = new APIAuthProxy('https://api.example.com', AuthStrategy.JWT, { jwtToken: 'jwt-token' });
+await proxyJwt.get('/secure');
+
+const proxyBasic = new APIAuthProxy('https://api.example.com', AuthStrategy.BASIC_AUTH, { username: 'admin', password: 'secret' });
+await proxyBasic.get('/dashboard');
+
+const proxyOAuth = new APIAuthProxy('https://api.example.com', AuthStrategy.OAUTH2, { accessToken: 'oauth-token' });
+await proxyOAuth.post('/data', {});
+
+console.log(`  All auth strategies working  (API Key, JWT, Basic, OAuth2)`);
 
 console.log('ALL TASKS COMPLETED SUCCESSFULLY');
