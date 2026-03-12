@@ -5,9 +5,8 @@ export class APIAuthProxy {
     Object.assign(this, { baseURL, strategy, credentials, requestLog: [], requestCount: 0, resetTime: 0 });
     this.maxRPM = credentials.rateLimit || Infinity;
   }
-}
 
- injectAuthHeaders(headers = {}) 
+ injectAuthHeaders(headers = {}) {
     const { apiKey, token, username, password, accessToken, jwtToken } = this.credentials;
     const authMap = {
       [AuthStrategy.API_KEY]: { 'X-API-Key': apiKey },
@@ -17,3 +16,20 @@ export class APIAuthProxy {
       [AuthStrategy.BASIC_AUTH]: { 'Authorization': `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}` }
     };
     return { ...headers, ...(authMap[this.strategy] || {}) };
+  }
+
+  async request(method, endpoint, options = {}) {
+    const now = Date.now();
+    if (now > this.resetTime) { this.requestCount = 0; this.resetTime = now + 60000; }
+    if (++this.requestCount > this.maxRPM) throw new Error('Rate limit exceeded');
+
+    const headers = this.injectAuthHeaders(options.headers);
+    const url = `${this.baseURL}${endpoint}`;
+    
+    const res = { method, url, timestamp: new Date().toISOString(), strategy: this.strategy };
+    this.requestLog.push(res);
+    console.log(`[AuthProxy] ${method} ${url}`);
+
+    return { status: 200, headers, data: { success: true, endpoint }, timestamp: res.timestamp };
+  }
+}
