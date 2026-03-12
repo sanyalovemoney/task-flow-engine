@@ -32,4 +32,21 @@ export class APIAuthProxy {
 
     return { status: 200, headers, data: { success: true, endpoint }, timestamp: res.timestamp };
   }
+
+ get(e, o) { return this.request('GET', e, o); }
+  post(e, d, o) { return this.request('POST', e, { ...o, body: d }); }
+  put(e, d, o) { return this.request('PUT', e, { ...o, body: d }); }
+  delete(e, o) { return this.request('DELETE', e, o); }
+
+  async refreshToken() {
+    const key = this.strategy === AuthStrategy.OAUTH2 ? 'accessToken' : 'jwtToken';
+    if (this.credentials[key]) {
+      this.credentials[key] = `new-${key}-${Date.now()}`;
+      console.log(`[AuthProxy] ${this.strategy} refreshed`);
+    }
+  }
+
+  getStats() {
+    return { strategy: this.strategy, total: this.requestLog.length, count: this.requestCount, recent: this.requestLog.slice(-5) };
+  }
 }
