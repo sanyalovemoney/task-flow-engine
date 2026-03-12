@@ -6,3 +6,14 @@ export class APIAuthProxy {
     this.maxRPM = credentials.rateLimit || Infinity;
   }
 }
+
+ injectAuthHeaders(headers = {}) 
+    const { apiKey, token, username, password, accessToken, jwtToken } = this.credentials;
+    const authMap = {
+      [AuthStrategy.API_KEY]: { 'X-API-Key': apiKey },
+      [AuthStrategy.BEARER_TOKEN]: { 'Authorization': `Bearer ${token}` },
+      [AuthStrategy.JWT]: { 'Authorization': `Bearer ${jwtToken}` },
+      [AuthStrategy.OAUTH2]: { 'Authorization': `OAuth ${accessToken}` },
+      [AuthStrategy.BASIC_AUTH]: { 'Authorization': `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}` }
+    };
+    return { ...headers, ...(authMap[this.strategy] || {}) };
