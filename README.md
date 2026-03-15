@@ -14,11 +14,14 @@
 ```text
 task-flow/
 ├── src/
-│   ├── generator.js     # Task 1
-│   ├── memoize.js       # Task 3
-│   ├── queue.js         # Task 4
-│   ├── async-utils.js   # Task 5
-│   └── decorators.js    # Task 9
+│   ├── generator.js      ← Task 1 
+│   ├── memoize.js        ← Task 3 
+│   ├── queue.js          ← Task 4 
+|   ├── async-utils.js    ← Task 5 
+|   ├── streams.js        ← Task 6 
+|   ├── events.js         ← Task 7 
+|   ├── proxy.js          ← Task 8 
+|   └── decorators.js     ← Task 9 
 ├── index.js            
 └── package.json        
 
