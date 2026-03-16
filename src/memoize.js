@@ -47,6 +47,5 @@ export function memoizeAdvanced(fn, { maxSize = Infinity, strategy = 'LRU', ttl 
 
     memo.getCacheSize = () => cache.size;
     memo.clear = () => { cache.clear(); meta.clear(); };
-    
     return memo;
 }
