@@ -5,6 +5,7 @@ import { asyncMapCallback, asyncMapPromise } from './src/async-utils.js';
 import { TaskReadableStream, TaskWritableStream } from './src/streams.js';
 import { createEventEmitter } from './src/events.js';
 import { APIAuthProxy, AuthStrategy } from './src/proxy.js';
+import { log, LogLevel, conditionalLog } from './src/decorators.js';
 
 console.log('TASK-FLOW ENGINE - ALL TASKS DEMO ');
 console.log('TASK 1: Generators & Timeout Iterator');
@@ -79,5 +80,19 @@ const proxyOAuth = new APIAuthProxy('https://api.example.com', AuthStrategy.OAUT
 await proxyOAuth.post('/data', {});
 
 console.log(`  All auth strategies working  (API Key, JWT, Basic, OAuth2)`);
+
+console.log('\nTASK 9: Logging Decorator (Levels, Async, Conditional)');
+const addFn = log({ level: LogLevel.INFO })(function add(a, b) { return a + b; });
+addFn(5, 10);
+
+const asyncLogFn = log({ level: LogLevel.INFO })(async function getData() { 
+  return 'data'; 
+});
+await asyncLogFn();
+
+const conditionalFn = conditionalLog((result) => result > 10)(function multiply(x) { return x * 3; });
+conditionalFn(2);
+conditionalFn(5);
+console.log(`  Logging levels, async, conditional support `);
 
 console.log('ALL TASKS COMPLETED SUCCESSFULLY');
