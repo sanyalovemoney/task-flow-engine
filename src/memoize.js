@@ -10,16 +10,33 @@ export function memoizeById(fn) {
     };
 }
 
-export function memoizeAdvanced(fn, { maxSize = Infinity, strategy = 'LRU', ttl = null } = {}) {
-    const cache = new Map(), meta = new Map();
-    
+export function memoizeAdvanced(
+    fn,
+    { maxSize = Infinity, strategy = 'LRU', ttl = null, customEvict } = {},
+) {
+    const cache = new Map();
+    const meta = new Map();
+
     const evict = () => {
+        if (typeof customEvict === 'function') {
+            const keyToRemove = customEvict({ cache, meta, strategy, maxSize });
+            if (keyToRemove && cache.has(keyToRemove)) {
+                cache.delete(keyToRemove);
+                meta.delete(keyToRemove);
+            }
+            return;
+        }
+
         let key;
-        if (strategy === 'LRU') key = cache.keys().next().value; 
-        if (strategy === 'LFU') key = [...meta].reduce((a, b) => a[1].f < b[1].f ? a : b)[0];
-        if (key) { cache.delete(key); meta.delete(key); }
+        if (strategy === 'LRU') key = cache.keys().next().value;
+        if (strategy === 'LFU') key = [...meta].reduce((a, b) => (a[1].f < b[1].f ? a : b))[0];
+        if (key) {
+            cache.delete(key);
+            meta.delete(key);
+        }
     };
- const memo = function(...args) {
+
+    const memo = function (...args) {
         const key = JSON.stringify(args), now = Date.now();
         
         if (cache.has(key)) {
