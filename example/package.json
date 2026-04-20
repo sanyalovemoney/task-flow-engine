@@ -1,0 +1,15 @@
+{
+  "name": "task-flow-engine-example",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Usage examples for the task-flow-engine library",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "sanyalovemoney",
+  "license": "MIT",
+  "dependencies": {
+    "task-flow-engine": "file:../lib"
+  }
+}

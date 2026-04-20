@@ -1,0 +1,20 @@
+{
+  "name": "task-flow-engine",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./generator": "./src/generator.js",
+    "./memoize": "./src/memoize.js",
+    "./queue": "./src/queue.js",
+    "./async-utils": "./src/async-utils.js",
+    "./streams": "./src/streams.js",
+    "./events": "./src/events.js",
+    "./proxy": "./src/proxy.js",
+    "./decorators": "./src/decorators.js"
+  },
+  "author": "sanyalovemoney",
+  "license": "MIT",
+  "description": "A collection of advanced JavaScript utility modules: generators, memoization, priority queue, async utilities, streams, event emitters, auth proxy, and logging decorators."
+}
