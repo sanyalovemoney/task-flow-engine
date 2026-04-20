@@ -1,5 +1,5 @@
 import {
-  taskGenerator,
+  fibonacciGenerator,
   iteratorWithTimeout,
   memoizeAdvanced,
   BiDirectionalPriorityQueue,
@@ -19,14 +19,24 @@ console.log('  TASK-FLOW ENGINE — ALL TASKS DEMO');
 
 console.log('Task 1: Generators & Timeout Iterator');
 
-const gen = taskGenerator();
+const gen = fibonacciGenerator();
 const first = gen.next().value;
-console.log(`  Generator first value: type="${first.type}", id=${first.id}`);
+console.log(`  Generator first value (Fibonacci): ${first}`);
 
-console.log('  Running iterator for 50ms...');
-await iteratorWithTimeout(taskGenerator(), 0.05, (v, i) => {
-  if (i < 3) console.log(`    [${i}] type=${v.type}`);
+console.log('  Running iterator for 50ms (calculating avg)...');
+let total = 0n;
+let lastCount = 0;
+await iteratorWithTimeout(fibonacciGenerator(), 0.05, (v, i) => {
+  total += v;
+  lastCount = i + 1;
+  if (i < 5) {
+    const avg = Number(total) / (i + 1);
+    console.log(`    [Iter ${i}] Fib = ${v}, Total = ${total}, Avg = ${avg.toFixed(2)}`);
+  }
 });
+console.log(`  Processed ${lastCount} Fibonacci numbers in 50ms`);
+const fibStr = total.toString();
+console.log(`  Final total: ${fibStr.length} digits (${fibStr.slice(0, 20)}...)`);
 console.log('  Iterator finished \n');
 
 
@@ -97,7 +107,7 @@ try {
 
 console.log('Task 6: Large Data Processing with Streams');
 
-const readable = new TaskReadableStream(taskGenerator(), 3);
+const readable = new TaskReadableStream(fibonacciGenerator(), 3);
 const writable = new TaskWritableStream();
 readable.pipe(writable);
 await new Promise((r) => writable.on('finish', r));
