@@ -5,6 +5,16 @@
   "main": "index.js",
   "author": "sanyalovemoney",
   "license": "MIT",
+  "scripts": {
+    "pipeline": "node pipeline/run.js",
+    "pipeline:small": "node pipeline/run.js --rows=100000",
+    "pipeline:medium": "node pipeline/run.js --rows=500000",
+    "pipeline:large": "node pipeline/run.js --rows=3000000",
+    "pipeline:1gb": "node pipeline/run.js --rows=7000000",
+    "benchmark": "node pipeline/benchmark.js",
+    "benchmark:gc": "node --expose-gc pipeline/benchmark.js",
+    "example": "cd example && node index.js"
+  },
   "devDependencies": {
     "eslint": "^10.0.2",
     "prettier": "3.8.1"
