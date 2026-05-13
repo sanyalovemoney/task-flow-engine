@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "type": "module",
   "main": "index.js",
+  "scripts": {
+    "pipeline": "node pipeline/run.js --rows=500000",
+    "pipeline:small": "node pipeline/run.js --rows=100000",
+    "pipeline:medium": "node pipeline/run.js --rows=300000",
+    "pipeline:large": "node pipeline/run.js --rows=3000000",
+    "pipeline:1gb": "node pipeline/run.js --rows=7000000",
+    "benchmark": "node pipeline/benchmark.js"
+  },
   "author": "sanyalovemoney",
   "license": "MIT",
   "devDependencies": {

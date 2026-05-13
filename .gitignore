@@ -1,6 +1,10 @@
 # Logs
 logs
 *.log
+
+# Generated pipeline data
+data/
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
