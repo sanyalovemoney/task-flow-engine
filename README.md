@@ -2,7 +2,7 @@
 
 A modular Node.js task-flow engine and big data streaming pipeline demonstrating advanced asynchronous programming, event-driven alerts, custom data structures, and memory-efficient ETL processing.
 
-\`\`\`
+```
 [Async Generator] → CSV File (1 GB+)
                          ↓
 [fs.createReadStream] → [CSVParserTransform] → [MetricsAggregator] → [AnomalyFilter] → [CleanDataWriter]
@@ -10,7 +10,7 @@ A modular Node.js task-flow engine and big data streaming pipeline demonstrating
                                                                      [EventEmitter]
                                                                             ↓
                                                                  [Terminal Alerts + Telegram Sim]
-\`\`\`
+```
 
 ## Overview
 
@@ -37,30 +37,30 @@ This repository contains:
 
 From the repository root:
 
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 To run the example demo:
 
-\`\`\`bash
+```bash
 cd example
 npm install
 node index.js
-\`\`\`
+```
 
 ## Pipeline Usage
 
 Available scripts from the repository root:
 
-\`\`\`bash
+```bash
 npm run pipeline:small   # Quick pipeline test (~100k rows)
 npm run pipeline         # Default pipeline run (~500k rows)
 npm run pipeline:medium  # Medium dataset run (~300k rows)
 npm run pipeline:large   # Large dataset run (~3M rows)
 npm run pipeline:1gb     # Full 1GB+ workload simulation (~7M rows)
 npm run benchmark       # Compare readFile() vs createReadStream() memory behavior
-\`\`\`
+```
 
 ## Backpressure & Performance
 
@@ -73,28 +73,29 @@ This pipeline is built around `stream.pipeline()` so that downstream slowdowns p
 
 ## Project Structure
 
-\`\`\`text
+```text
 task-flow-engine/
-├── lib/                      # Library package and task modules
-│   ├── package.json
+├── lib/                      ← Library code (Task 2)
+│   ├── package.json          
 │   └── src/
-│       ├── index.js          # Library exports
-│       ├── generator.js      # Task 1 + CSV data generation
-│       ├── memoize.js        # Task 3 memoization utilities
-│       ├── queue.js          # Task 4 bidirectional priority queue
-│       ├── async-utils.js    # Task 5 async helpers with cancellation
-│       ├── streams.js        # Task 6 ETL stream transforms
-│       ├── events.js         # Task 7 alert/event emitter logic
-│       ├── proxy.js         # Task 8 authentication proxy
-│       └── decorators.js     # Task 9 logging decorators
-├── pipeline/                 # Pipeline orchestration and benchmarks
-│   ├── run.js                # Main pipeline runner
-│   └── benchmark.js          # Memory benchmark experiment
-├── example/                  # Example consumer project
-│   ├── index.js              # Demo entry point
-│   └── package.json          # Local dependency on ../lib
+│       ├── index.js          ← Library exports
+│       ├── generator.js      ← Task 1 + CSV Data Ingestion
+│       ├── memoize.js        ← Task 3 
+│       ├── queue.js          ← Task 4 
+│       ├── async-utils.js    ← Task 5 
+│       ├── streams.js        ← Task 6 + ETL Pipeline Transforms
+│       ├── events.js         ← Task 7 + Reactive Alert System
+│       ├── proxy.js          ← Task 8 
+│       └── decorators.js     ← Task 9 
+├── pipeline/                 ← Big Data Pipeline (Coursework)
+│   ├── run.js                ← Main pipeline orchestrator
+│   └── benchmark.js          ← Memory comparison experiment
+├── example/                  ← Demo project (Task 2)
+│   ├── index.js              ← Runs all examples
+│   └── package.json          ← Contains {"task-flow-engine": "file:../lib"}
+├── data/                     ← Generated CSV files (gitignored)
 └── README.md
-\`\`\`
+```
 
 ## Notes
 
